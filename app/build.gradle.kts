@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.fitnesstrackerapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -30,6 +31,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -50,6 +52,17 @@ android {
 }
 
 dependencies {
+    // for room database
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
+    ksp("androidx.room:room-compiler:2.6.1")
+
+    // for date picker
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.6")
+
+    //y charts, make sure minsdk is at least 26
+    implementation("co.yml:ycharts:2.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +72,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
