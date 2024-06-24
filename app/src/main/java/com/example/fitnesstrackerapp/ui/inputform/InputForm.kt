@@ -2,6 +2,7 @@ package com.example.fitnesstrackerapp.ui.inputform
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -11,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitnesstrackerapp.TopAppBarCustom
 import com.example.fitnesstrackerapp.ui.AppViewModelProvider
@@ -47,22 +50,33 @@ fun InputForm(
         Column(
             modifier = modifier
                 .padding(innerPadding)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row {
-                Text(text = "Date: ${repository.formatDate.value}")
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(modifier = modifier.padding(10.dp), text = "Date: ${repository.formatDate.value}")
+                Spacer(modifier = modifier.weight(0.5f))
                 Button(
-                    onClick = { dateDialogState.show() }
+                    onClick = { dateDialogState.show() },
+                    modifier = modifier.padding(10.dp)
                 ) {
                     Text(text = "Change")
                 }
             }
 
             TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                label = { Text(text = "Your data")},
                 value = repository.data.value,
                 onValueChange = {repository.data.value = it}
             )
             Button(
+                modifier = modifier.padding(10.dp),
                 onClick = { coroutineScope.launch {
                     repository.enterData(route)
                     navigate()
