@@ -33,7 +33,6 @@ fun InputForm(
     title: String,
     canNavigateBack: Boolean,
     navigate: () -> Unit,
-    route: String,
     repository: InputFormViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val dateDialogState = rememberMaterialDialogState()
@@ -78,7 +77,7 @@ fun InputForm(
             Button(
                 modifier = modifier.padding(10.dp),
                 onClick = { coroutineScope.launch {
-                    repository.enterData(route)
+                    repository.enterData()
                     navigate()
                 } }
             ) {
@@ -107,6 +106,6 @@ fun InputForm(
 @Composable
 fun InputFormPreview() {
     FitnessTrackerAppTheme {
-        InputForm(title = "Steps", canNavigateBack = true, navigate = { /*TODO*/ }, route = "")
+        InputForm(title = "Steps", canNavigateBack = true, navigate = { /*TODO*/ })
     }
 }

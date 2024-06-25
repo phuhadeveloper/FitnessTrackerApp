@@ -6,12 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Steps::class, Distance::class, Calories::class], version = 2, exportSchema = false )
+@Database(entities = [Steps::class], version = 3, exportSchema = false )
 @TypeConverters(Converters::class)
 abstract class FitnessDatabase : RoomDatabase() {
     abstract fun stepsDao(): StepsDao
-    abstract fun distanceDao(): DistanceDao
-    abstract fun caloriesDao(): CaloriesDao
 
     companion object {
         @Volatile

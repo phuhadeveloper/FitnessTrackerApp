@@ -5,9 +5,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.fitnesstrackerapp.FitnessTrackerApp
-import com.example.fitnesstrackerapp.ui.datadisplay.CaloriesViewModel
-import com.example.fitnesstrackerapp.ui.datadisplay.DistanceViewModel
-import com.example.fitnesstrackerapp.ui.datadisplay.StepsViewModel
+import com.example.fitnesstrackerapp.ui.datadisplay.GeneralDisplayViewModel
 import com.example.fitnesstrackerapp.ui.inputform.InputFormViewModel
 
 object AppViewModelProvider {
@@ -16,13 +14,7 @@ object AppViewModelProvider {
             InputFormViewModel(fitnessTrackerApp().repository)
         }
         initializer {
-            StepsViewModel(fitnessTrackerApp().repository)
-        }
-        initializer {
-            DistanceViewModel(fitnessTrackerApp().repository)
-        }
-        initializer {
-            CaloriesViewModel(fitnessTrackerApp().repository)
+            GeneralDisplayViewModel(fitnessTrackerApp().repository)
         }
     }
 

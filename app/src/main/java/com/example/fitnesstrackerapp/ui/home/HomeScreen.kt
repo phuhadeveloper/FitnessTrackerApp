@@ -61,17 +61,17 @@ fun HomeScreen(
                 imageDesc = "Image by flaticon"
             )
             CardSummary(
-                text = "Your Distance Summary",
+                text = "Distance Travelled",
                 onNavigate = onNavigateDist,
                 modifier = modifier.padding(10.dp),
                 image = painterResource(R.drawable.screenshot_2024_06_24_211234),
                 imageDesc = "Image by flaticon"
             )
             CardSummary(
-                text = "Your Calories Summary",
+                text = "Calories Burned",
                 onNavigate = onNavigateCal,
                 modifier = modifier.padding(10.dp),
-                image = painterResource(R.drawable.screenshot_2024_06_24_210631),
+                image = painterResource(R.drawable.screenshot_2024_06_24_224226),
                 imageDesc = "Image by flaticon"
             )
         }

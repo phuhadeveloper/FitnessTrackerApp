@@ -1,5 +1,9 @@
 package com.example.fitnesstrackerapp
 
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,19 +19,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.fitnesstrackerapp.data.FitnessDatabase
 import com.example.fitnesstrackerapp.ui.datadisplay.GeneralDisplay
 import com.example.fitnesstrackerapp.ui.home.HomeScreen
 import com.example.fitnesstrackerapp.ui.inputform.InputForm
 import com.example.fitnesstrackerapp.ui.theme.FitnessTrackerAppTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -62,7 +70,6 @@ class MainActivity : ComponentActivity() {
                         GeneralDisplay(
                             canNavigateBack = true,
                             navigate = { navController.popBackStack() },
-                            navigateToForm = { navController.navigate(Routes.DISTANCE_FORM) },
                             title = "Your Distance Summary",
                             route = Routes.DISTANCE
                         )
@@ -71,7 +78,6 @@ class MainActivity : ComponentActivity() {
                         GeneralDisplay(
                             canNavigateBack = true,
                             navigate = { navController.popBackStack() },
-                            navigateToForm = { navController.navigate(Routes.CALORIES_FORM) },
                             title = "Your Calories Summary",
                             route = Routes.CALORIES
                         )
@@ -81,31 +87,17 @@ class MainActivity : ComponentActivity() {
                             title = "Enter Your Steps Data",
                             canNavigateBack = true,
                             navigate = { navController.popBackStack() },
-                            route = Routes.STEPS_FORM
-                        )
-                    }
-                    composable(Routes.DISTANCE_FORM) {
-                        InputForm(
-                            title = "Enter Your Distance Data",
-                            canNavigateBack = true,
-                            navigate = { navController.popBackStack() },
-                            route = Routes.DISTANCE_FORM
-                        )
-                    }
-                    composable(Routes.CALORIES_FORM) {
-                        InputForm(
-                            title = "Enter Your Calories Data",
-                            canNavigateBack = true,
-                            navigate = { navController.popBackStack() },
-                            route = Routes.DISTANCE_FORM
                         )
                     }
                 }
 
             }
         }
+
     }
 }
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

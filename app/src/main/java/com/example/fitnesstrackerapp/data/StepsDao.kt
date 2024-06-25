@@ -20,4 +20,6 @@ interface StepsDao {
     suspend fun getStepsByDate(date: Date): Steps?
     @Query("SELECT * FROM `steps` ORDER BY date DESC")
     fun getAllSteps(): Flow<List<Steps>>
+    @Query("SELECT * FROM `steps` WHERE date BETWEEN :startDate AND :endDate")
+    fun getStepsByDateRange(startDate: Date, endDate: Date): Flow<List<Steps>>
 }

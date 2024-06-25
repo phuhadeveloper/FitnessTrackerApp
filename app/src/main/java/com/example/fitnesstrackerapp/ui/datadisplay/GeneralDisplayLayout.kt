@@ -32,11 +32,13 @@ fun GeneralDisplay(
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean,
     navigate: () -> Unit,
-    navigateToForm: () -> Unit,
+    navigateToForm: () -> Unit = {},
     title: String,
     route: String,
+    repository: GeneralDisplayViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
+    
+    val stepsData = repository.data.collectAsState(initial = emptyList()).value
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -65,24 +67,58 @@ fun GeneralDisplay(
                         fontSize = 20.sp
                     )
                     Spacer(modifier = modifier.weight(1f))
-                    IconButton(onClick = navigateToForm) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "forward arrow"
-                        )
+                    if (route == Routes.STEPS) {
+                        IconButton(onClick = navigateToForm) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "forward arrow"
+                            )
+                        }
                     }
                 }
 
+                var averageSteps = 0.0
+                val lastWeekData = repository.dataLastWeek.collectAsState(initial = emptyList()).value
+
+                lastWeekData.forEach {
+                    averageSteps += it.stepsCount.toDouble()
+                }
+                averageSteps /= 7
+
                 if (route == Routes.STEPS) {
-                    StepsDataDisplay(modifier = modifier)
+                    DataDisplay(data = stepsData, route = route)
+
+                    Card(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(20.dp)
+                    ) {
+                        Text(fontSize = 20.sp, text = "Your steps average for the last 7 days is ${Math.round(averageSteps)} steps/day.")
+                    }
                 }
 
                 if (route == Routes.DISTANCE) {
-                    DistanceDataDisplay(modifier = modifier)
+                    DataDisplay(data = stepsData, route = route)
+
+                    Card(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(20.dp)
+                    ) {
+                        Text(fontSize = 20.sp, text = "Your distance average for the last 7 days is ${averageSteps* AVERAGE_STEP_SIZE/ FEET_IN_A_MILE} miles/day.")
+                    }
                 }
 
                 if (route == Routes.CALORIES) {
-                    CaloriesDataDisplay(modifier = modifier)
+                    DataDisplay(data = stepsData, route = route)
+
+                    Card(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(20.dp)
+                    ) {
+                        Text(fontSize = 20.sp, text = "Your burned calories average for the last 7 days is ${averageSteps* CAL_BURNED_PER_STEP} calories/day.")
+                    }
                 }
             }
         }
