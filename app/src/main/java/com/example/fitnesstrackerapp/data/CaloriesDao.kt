@@ -16,6 +16,6 @@ interface CaloriesDao {
     suspend fun update(calories: Calories)
     @Query("SELECT * FROM `calories` WHERE date = :date")
     suspend fun getCaloriesByDate(date: Date): Calories?
-    @Query("SELECT * FROM `calories` ORDER BY date ASC")
+    @Query("SELECT * FROM `calories` ORDER BY date DESC")
     fun getAllCalories(): Flow<List<Calories>>
 }

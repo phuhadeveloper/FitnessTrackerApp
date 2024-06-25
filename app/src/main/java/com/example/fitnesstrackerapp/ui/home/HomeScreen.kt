@@ -1,5 +1,6 @@
 package com.example.fitnesstrackerapp.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,8 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.fitnesstrackerapp.R
 import com.example.fitnesstrackerapp.TopAppBarCustom
 import com.example.fitnesstrackerapp.ui.theme.FitnessTrackerAppTheme
 
@@ -45,22 +51,28 @@ fun HomeScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(scrollState),
+                .verticalScroll(scrollState)
         ) {
             CardSummary(
-                text = "Card for Steps",
+                text = "Your Steps Summary",
                 onNavigate =  onNavigateSteps,
-                modifier = modifier.padding(10.dp)
+                modifier = modifier.padding(10.dp),
+                image = painterResource(R.drawable.screenshot_2024_06_24_210917),
+                imageDesc = "Image by flaticon"
             )
             CardSummary(
-                text = "Card for Distance",
+                text = "Your Distance Summary",
                 onNavigate = onNavigateDist,
-                modifier = modifier.padding(10.dp)
+                modifier = modifier.padding(10.dp),
+                image = painterResource(R.drawable.screenshot_2024_06_24_211234),
+                imageDesc = "Image by flaticon"
             )
             CardSummary(
-                text = "Card for Calories",
+                text = "Your Calories Summary",
                 onNavigate = onNavigateCal,
-                modifier = modifier.padding(10.dp)
+                modifier = modifier.padding(10.dp),
+                image = painterResource(R.drawable.screenshot_2024_06_24_210631),
+                imageDesc = "Image by flaticon"
             )
         }
 
@@ -72,12 +84,14 @@ fun HomeScreen(
 fun CardSummary(
     text: String,
     onNavigate: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    image: Painter,
+    imageDesc: String
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(2f)
+            .aspectRatio(1.5f)
     ) {
         Column(
             modifier = modifier.fillMaxSize()
@@ -86,7 +100,7 @@ fun CardSummary(
                 modifier = modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = text)
+                Text(text = text, fontSize = 20.sp)
                 Spacer(modifier = modifier.weight(1f))
                 IconButton(
                     onClick = onNavigate
@@ -97,6 +111,13 @@ fun CardSummary(
                     )
                 }
             }
+
+            Image(
+                modifier = modifier.fillMaxSize(),
+                painter = image,
+                contentDescription = imageDesc,
+                contentScale = ContentScale.Crop
+            )
         }
     }
 }

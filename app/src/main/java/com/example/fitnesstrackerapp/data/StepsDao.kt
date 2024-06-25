@@ -18,6 +18,6 @@ interface StepsDao {
 
     @Query("SELECT * FROM `steps` WHERE date = :date")
     suspend fun getStepsByDate(date: Date): Steps?
-    @Query("SELECT * FROM `steps` ORDER BY date ASC")
+    @Query("SELECT * FROM `steps` ORDER BY date DESC")
     fun getAllSteps(): Flow<List<Steps>>
 }

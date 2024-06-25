@@ -16,6 +16,6 @@ interface DistanceDao {
     suspend fun update(distance: Distance)
     @Query("SELECT * FROM `distance` WHERE date = :date")
     suspend fun getDistanceByDate(date: Date): Distance?
-    @Query("SELECT * FROM `distance` ORDER BY date ASC")
+    @Query("SELECT * FROM `distance` ORDER BY date DESC")
     fun getAllDistance(): Flow<List<Distance>>
 }
