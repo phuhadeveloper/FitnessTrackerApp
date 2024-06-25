@@ -8,6 +8,7 @@ import com.example.fitnesstrackerapp.FitnessTrackerApp
 import com.example.fitnesstrackerapp.ui.datadisplay.GeneralDisplayViewModel
 import com.example.fitnesstrackerapp.ui.inputform.InputFormViewModel
 
+// providing database access to each viewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {

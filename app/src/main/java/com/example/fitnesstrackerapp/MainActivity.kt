@@ -1,35 +1,28 @@
 package com.example.fitnesstrackerapp
 
-import android.content.PeriodicSync
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+/**
+ *author: Phu Ha
+ * date: 6.20.2024
+ *
+ * This is file includes the navigation for the app
+ * Other parts include setting up and connecting to Health Connect
+ *
+ */
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.core.app.ActivityCompat
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
@@ -47,8 +40,6 @@ import com.example.fitnesstrackerapp.ui.home.HomeScreen
 import com.example.fitnesstrackerapp.ui.inputform.InputForm
 import com.example.fitnesstrackerapp.ui.theme.FitnessTrackerAppTheme
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
 import java.time.ZoneId
@@ -67,7 +58,7 @@ class MainActivity : ComponentActivity() {
         return PermissionController.createRequestPermissionResultContract()
     }
 
-    // database
+    // database instance
     private lateinit var db: FitnessDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +68,7 @@ class MainActivity : ComponentActivity() {
         // initiate db
         db = FitnessDatabase.getDatabase(applicationContext)
 
+        // get permissions and try to make a request
         lifecycleScope.launch {
             val requestPermissionActivityContract = PermissionController.createRequestPermissionResultContract()
 
@@ -105,15 +97,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FitnessTrackerAppTheme {
+                //set up the navigatio for the app
                 val navController = rememberNavController()
-
 
                 // Routes for the app
                 NavHost(
                     navController = navController,
                     startDestination = Routes.HOME,
                 ) {
-
+                    // route for homescreen
                     composable(Routes.HOME) {
                         HomeScreen(
                             onNavigateSteps = { navController.navigate(Routes.STEPS) },
@@ -123,6 +115,7 @@ class MainActivity : ComponentActivity() {
                             title = "Your Fitness Tracker"
                         )
                     }
+                    //route for steps page
                     composable(Routes.STEPS) {
                         GeneralDisplay(
                             canNavigateBack = true,
@@ -132,6 +125,7 @@ class MainActivity : ComponentActivity() {
                             route = Routes.STEPS
                         )
                     }
+                    // route for distance
                     composable(Routes.DISTANCE) {
                         GeneralDisplay(
                             canNavigateBack = true,
@@ -140,6 +134,7 @@ class MainActivity : ComponentActivity() {
                             route = Routes.DISTANCE
                         )
                     }
+                    // route for calories
                     composable(Routes.CALORIES) {
                         GeneralDisplay(
                             canNavigateBack = true,
@@ -148,6 +143,7 @@ class MainActivity : ComponentActivity() {
                             route = Routes.CALORIES
                         )
                     }
+                    // route for input form
                     composable(Routes.STEPS_FORM) {
                         InputForm(
                             title = "Enter Your Steps Data",
