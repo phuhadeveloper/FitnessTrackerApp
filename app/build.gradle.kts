@@ -64,6 +64,9 @@ dependencies {
     //y charts, make sure minsdk is at least 26
     implementation("co.yml:ycharts:2.1.0")
 
+    // health connect
+    implementation("androidx.health.connect:connect-client:1.1.0-alpha02")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

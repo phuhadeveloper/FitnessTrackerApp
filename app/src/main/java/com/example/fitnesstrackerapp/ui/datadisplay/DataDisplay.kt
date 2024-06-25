@@ -56,14 +56,17 @@ fun DataDisplay(
         ) {steps ->
 
             var valueDisplay = steps.stepsCount.toDouble()
+            var measurement: String = "steps"
 
             // if the route is distance, calculate distance from stepCounts, distance = steps*(lengthOfAverageStepSize)
             if (route == Routes.DISTANCE) {
                 valueDisplay = (steps.stepsCount * AVERAGE_STEP_SIZE) / FEET_IN_A_MILE
+                measurement = "miles"
             }
 
             if (route == Routes.CALORIES) {
                 valueDisplay = steps.stepsCount.toDouble() * CAL_BURNED_PER_STEP
+                measurement = "cal"
             }
 
             Row(
@@ -77,7 +80,7 @@ fun DataDisplay(
             ) {
                 Text(modifier = modifier.padding(10.dp), text = "${convertDateToLocalDate(steps.date)}")
                 Spacer(modifier = modifier.weight(1f))
-                Text(modifier = modifier.padding(10.dp), text = "${if (route == Routes.STEPS) Math.round(valueDisplay) else valueDisplay} steps")
+                Text(modifier = modifier.padding(10.dp), text = "${if (route == Routes.STEPS) Math.round(valueDisplay) else valueDisplay} $measurement")
             }
         }
     }
